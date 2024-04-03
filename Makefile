@@ -31,8 +31,7 @@ logs:
 	cd srcs && docker compose logs && cd ..
 
 setup:
-	${ENV} ./configure-login.sh
-	${ENV} ./configure-hosts.sh
+	${ENV} ./set_login.sh
 	sudo mkdir -p /home/${LOGIN}/
 	sudo mkdir -p ${DATA_PATH}
 	sudo mkdir -p ${DATA_PATH}/mariadb-data
@@ -42,7 +41,7 @@ clean:
 	sudo rm -rf ${DATA_PATH}
 
 fclean: clean
-	${ENV} ./anonymize-login.sh
+	${ENV} ./erase_login.sh
 	docker system prune -f -a --volumes
 	docker volume rm srcs_mariadb-data srcs_wordpress-data
 
