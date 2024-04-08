@@ -35,6 +35,18 @@ services:
             - wordpress-data:/var/www/html/
         depends_on:
             - mariadb
+    redis:
+        container_name: redis
+        image: redis:inception
+        init: true
+        build: ./requirements/redis
+       
+        networks:
+            - inception
+        restart: always
+        depends_on:
+            - wordpress
+    
 
 networks:
     inception:

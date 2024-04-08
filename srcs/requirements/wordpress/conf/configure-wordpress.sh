@@ -33,6 +33,11 @@ else
 	wp theme status twentyseventeen --allow-root
 	wp post delete 1 --force --allow-root
 	wp post create --post_type=post --post_title="Learning Docker" --post_content="In this project we learn Docker and also the basics of Nginx, Mariadb and wordpress!" --post_status=publish --allow-root
+
+	wp config set WP_REDIS_HOST redis --allow-root
+	wp config set WP_REDIS_PORT 6379 --allow-root
+	wp config set WP_CACHE true --allow-root
+
 fi
 
 echo "WordPress | Starting WordPress fastCGI on port 9000."
