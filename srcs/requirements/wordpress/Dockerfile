@@ -1,6 +1,5 @@
 FROM	alpine:3.18
 
-# Install PHP 8.1 & MariaDB-client dependencies
 RUN		apk update && apk upgrade &&\
 		apk add php81 php81-fpm php81-bcmath php81-bz2 php81-calendar php81-cli php81-ctype \
 		php81-curl php81-dom php81-exif php81-fileinfo php81-gd php81-gmp php81-iconv php81-imap\
@@ -22,10 +21,10 @@ RUN		apk add curl &&\
 RUN		chmod +x wp-cli.phar &&\
 		mv wp-cli.phar /usr/bin/wp
 
-# Copy the WordPress configuration file to the container
+# Copy the WordPress configuration script into the container
 COPY	./conf/configure-wordpress.sh /tmp/configure-wordpress.sh
 
-# Make the configuration file executable inside the container
+# Change permissions to make it executable inside the container
 RUN		chmod +x /tmp/configure-wordpress.sh
 
 # Set the working directory to the WordPress directory
