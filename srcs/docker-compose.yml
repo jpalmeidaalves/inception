@@ -37,16 +37,29 @@ services:
             - mariadb
     redis:
         container_name: redis
-        image: redis:inception
+        image:          redis:inception
         init: true
-        build: ./requirements/redis
-       
+        build:          ./requirements/redis
+        volumes:
+            - wordpress-data:/var/www/html/
         networks:
             - inception
-        restart: always
+        restart:        always
         depends_on:
             - wordpress
-    
+    ftp-server:
+        container_name: ftp-server
+        image:          ftp-server:inception
+        env_file:       .env
+        build:          requirements/ftpserver
+        ports:
+            - "21:21"
+            - "21100-21110:21100-21110"
+        volumes:
+            - wordpress-data:/var/www/html/
+        networks:
+            - inception
+        restart:        always
 
 networks:
     inception:
