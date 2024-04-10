@@ -14,8 +14,8 @@ RUN         chmod 755 /run/redis
 # Configure Redis
 RUN     cp /etc/redis.conf /etc/redis.conf.bak
 RUN     sed -i 's/bind 127.0.0.1/#bind 127.0.0.1/' /etc/redis.conf
-RUN     echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf 
-RUN     sysctl -p
+RUN     sed -i "s|# maxmemory <bytes>|maxmemory 2mb|g" /etc/redis.conf
+RUN     sed -i "s|# maxmemory-policy noeviction|maxmemory-policy allkeys-lru|g" /etc/redis.conf
 
 
 # Run Redis
