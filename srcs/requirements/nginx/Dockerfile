@@ -6,7 +6,7 @@ RUN		apk update && apk upgrade && apk add nginx &&\
 
 # Copy the configuration files to the container
 COPY	./conf/nginx.conf /etc/nginx/nginx.conf
-COPY	./conf/default.conf /etc/nginx/http.d/default.conf
+COPY	./conf/default.conf /etc/nginx/sites-enabled/default.conf
 
 # Install openssl and create a self-signed certificate for HTTPS
 RUN		apk add openssl && openssl req -x509 -nodes\

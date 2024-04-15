@@ -3,11 +3,11 @@ DOMAIN =	${LOGIN}.42.fr
 DATA_PATH = /home/${LOGIN}/data
 ENV =		LOGIN=${LOGIN} DATA_PATH=${DATA_PATH} DOMAIN=${LOGIN}.42.fr 
 
-# print_env:
-# 	@echo "LOGIN=${LOGIN}"
-# 	@echo "DOMAIN=${DOMAIN}"
-# 	@echo "DATA_PATH=${DATA_PATH}"
-# 	@echo "ENV=${ENV}"
+print_env:
+	@echo "LOGIN=${LOGIN}"
+	@echo "DOMAIN=${DOMAIN}"
+	@echo "DATA_PATH=${DATA_PATH}"
+	@echo "ENV=${ENV}"
 
 all: up
 
