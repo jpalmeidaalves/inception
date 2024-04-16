@@ -65,13 +65,14 @@ services:
         image:          adminer:inception
         env_file:       .env
         build:          requirements/adminer
+        expose:
+            - "9000"
         networks:
             - inception
         restart:        always
         depends_on:
             - mariadb
-        ports:
-            - "8080:8080"
+    
 
 networks:
     inception:
