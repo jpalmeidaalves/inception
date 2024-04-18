@@ -2,7 +2,7 @@ services:
     nginx:
         container_name: nginx
         build:          ./requirements/nginx/
-        image:          nginx:inception
+        image:          nginx-img-inception
         env_file:       .env
         networks:
             - inception
@@ -16,7 +16,7 @@ services:
     mariadb:
         container_name: mariadb
         build:          ./requirements/mariadb/
-        image:          mariadb:inception
+        image:          mariadb-img-inception
         env_file:       .env
         networks:
             - inception
@@ -26,7 +26,7 @@ services:
     wordpress:
         container_name: wordpress
         build:          ./requirements/wordpress/
-        image:          wordpress:inception
+        image:          wordpress-img-inception
         env_file:       .env
         networks:
             - inception
@@ -37,7 +37,7 @@ services:
             - mariadb
     redis:
         container_name: redis
-        image:          redis:inception
+        image:          redis-img-inception
         init: true
         build:          ./requirements/redis
         volumes:
@@ -49,7 +49,7 @@ services:
             - wordpress
     ftp-server:
         container_name: ftp-server
-        image:          ftp-server:inception
+        image:          ftp-server-img-inception
         env_file:       .env
         build:          requirements/ftpserver
         ports:
@@ -62,7 +62,7 @@ services:
         restart:        always
     adminer:
         container_name: adminer
-        image:          adminer:inception
+        image:          adminer-img-inception
         env_file:       .env
         build:          requirements/adminer
         expose:
@@ -72,12 +72,26 @@ services:
         restart:        always
         depends_on:
             - mariadb
+    webserv:
+        container_name: webserv
+        image:          webserv_img-inception
+        build:          requirements/webserv
+        ports:
+            - "8084:8084"
+        networks:
+            static_site:
+                ipv4_address: 192.168.1.101
     
 
 networks:
     inception:
         name:   inception
         driver: bridge
+    static_site:
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.1.0/24
 
 volumes:
   mariadb-data:
