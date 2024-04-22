@@ -2,6 +2,9 @@
 
 echo -e "* Executing MariaDB configuration script *"
 
+export DB_HOST=$(cat /run/secrets/db_host)
+export DB_ROOT_PASS=$(cat /run/secrets/db_root_pass)
+
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
 	chown -R mysql:mysql /run/mysqld
@@ -17,10 +20,12 @@ else
 	echo "* MySQL Data Directory done."
 
 	echo "* Configuring MySQL..."
+
 	
 	# Make a hidden file to store the MySQL commands
 	TMP=/tmp/.tmpfile
 
+	# Write the MySQL commands to the .tmpfile
 	echo "USE mysql;" > ${TMP}
 	echo "FLUSH PRIVILEGES;" >> ${TMP}
 	echo "DELETE FROM mysql.user WHERE User='';" >> ${TMP}
@@ -40,11 +45,13 @@ else
 	rm -f ${TMP}
 	echo "* MySQL configured successfully."
 fi
+
 # edit the mariadb-server.cnf file to allow remote connections listening for TCP/IP connections.
 sed -i "s|skip-networking|# skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 # set the bind-address to listen to all addresses in the machine
 sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
 
 echo "* Starting MariaDB daemon on port 3306."
+
 # Start the MySQL daemon as mysql user and stats to display the logs on the console
 exec /usr/bin/mysqld --user=mysql --console

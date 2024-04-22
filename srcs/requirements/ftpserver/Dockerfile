@@ -6,4 +6,7 @@ RUN	apk update && apk upgrade && apk add --no-cache \
 COPY conf/vsftpd.conf /tmp/vsftpd.conf
 
 COPY conf/config_ftp.sh /tmp/config_ftp.sh
+
+STOPSIGNAL SIGQUIT
+
 ENTRYPOINT ["sh", "/tmp/config_ftp.sh"]

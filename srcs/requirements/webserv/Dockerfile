@@ -14,5 +14,6 @@ RUN     make
 
 EXPOSE 8084 8086
 
-ENTRYPOINT [ "./webserv", "configFile.conf"]
+
+CMD [ "./webserv", "configFile.conf"]
 

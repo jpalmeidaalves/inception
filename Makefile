@@ -1,6 +1,7 @@
 LOGIN =		$(shell whoami)
 DOMAIN =	${LOGIN}.42.fr
 DATA_PATH = /home/${LOGIN}/data
+
 ENV =		LOGIN=${LOGIN} DATA_PATH=${DATA_PATH} DOMAIN=${LOGIN}.42.fr 
 
 print_env:
@@ -35,6 +36,7 @@ setup:
 	sudo mkdir -p ${DATA_PATH}
 	sudo mkdir -p ${DATA_PATH}/mariadb-data
 	sudo mkdir -p ${DATA_PATH}/wordpress-data
+	sudo mkdir -p ${DATA_PATH}/webserv-data
 
 clean:
 	sudo rm -rf ${DATA_PATH}

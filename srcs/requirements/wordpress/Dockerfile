@@ -10,25 +10,18 @@ RUN		apk update && apk upgrade &&\
 		php81-xml php81-xmlreader php81-xmlwriter php81-xsl php81-zip php81-zlib &&\
 		apk add mariadb-client
 
-# Edit the php config file to make it listen on internal inception network port 9000
 RUN		sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php81/php-fpm.d/www.conf
 
-# Install WP-CLI to manage WordPress from the command line
 RUN		apk add curl &&\
 		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
-# Make the WP-CLI executable and move it to /usr/bin
 RUN		chmod +x wp-cli.phar &&\
 		mv wp-cli.phar /usr/bin/wp
 
-# Copy the WordPress configuration script into the container
 COPY	./conf/configure-wordpress.sh /tmp/configure-wordpress.sh
 
-# Change permissions to make it executable inside the container
 RUN		chmod +x /tmp/configure-wordpress.sh
 
-# Set the working directory to the WordPress directory
 WORKDIR /var/www/html/wordpress
 
-# Execute the configuration scrtipt when the container starts
 ENTRYPOINT	[ "sh", "/tmp/configure-wordpress.sh" ]

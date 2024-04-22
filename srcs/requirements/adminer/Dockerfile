@@ -26,8 +26,6 @@ RUN apk update && \
 	php81-dom \
 	php81-simplexml
 
-#RUN the adminer part, create html directory, move the adminer directory and add user
-
 RUN \
 	wget "http://www.adminer.org/latest.php" -O adminer.php && \
 	mkdir -p /var/www/html && \

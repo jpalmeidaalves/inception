@@ -20,6 +20,9 @@ services:
         env_file:       .env
         networks:
             - inception
+        secrets:
+            - db_root_pass
+            - db_host
         restart:        on-failure
         volumes:
             - mariadb-data:/var/lib/mysql/
@@ -30,6 +33,9 @@ services:
         env_file:       .env
         networks:
             - inception
+        secrets:
+            - db_root_pass
+            - db_host
         restart:        on-failure
         volumes:
             - wordpress-data:/var/www/html/
@@ -44,7 +50,7 @@ services:
             - wordpress-data:/var/www/html/
         networks:
             - inception
-        restart:        always
+        restart:        on-failure
         depends_on:
             - wordpress
     ftp-server:
@@ -52,6 +58,7 @@ services:
         image:          ftp-server-img-inception
         env_file:       .env
         build:          requirements/ftpserver
+        init: true
         ports:
             - "21:21"
             - "21100-21110:21100-21110"
@@ -59,7 +66,7 @@ services:
             - wordpress-data:/var/www/html/
         networks:
             - inception
-        restart:        always
+        restart:        on-failure
     adminer:
         container_name: adminer
         image:          adminer-img-inception
@@ -69,20 +76,37 @@ services:
             - "9000"
         networks:
             - inception
-        restart:        always
+        restart:        on-failure
         depends_on:
             - mariadb
     webserv:
         container_name: webserv
         image:          webserv_img-inception
         build:          requirements/webserv
+        init:        true
         ports:
             - "8084:8084"
+        env_file:       .env
         networks:
             static_site:
                 ipv4_address: 192.168.1.101
-    
-
+        volumes:
+            - webserv-data:/webserv/www/
+        restart:        on-failure
+    cadvisor:
+        container_name: cadvisor
+        image: cadvisor_img-inception
+        build: requirements/cadvisor
+        networks:
+            - inception
+        ports:
+            - "8080:8080"
+        volumes:
+            - /:/rootfs:ro
+            - /var/run:/var/run:rw
+            - /sys:/sys:ro
+            - /var/lib/docker/:/var/lib/docker:ro
+        restart:        on-failure
 networks:
     inception:
         name:   inception
@@ -106,3 +130,17 @@ volumes:
       type: 'none'
       o: 'bind'
       device: ${DATA_PATH}/wordpress-data
+  webserv-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${DATA_PATH}/webserv-data
+
+secrets:
+    db_root_pass:
+        file: ../secrets/db_root_pass.txt
+    db_host:
+        file: ../secrets/db_host.txt
+    wp_db_name:
+        file: ../secrets/wp_db_name.txt
