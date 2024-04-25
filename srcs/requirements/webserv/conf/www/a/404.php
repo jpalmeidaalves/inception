@@ -1,1 +1,0 @@
-<?php echo "this page is 404.php"; ?>

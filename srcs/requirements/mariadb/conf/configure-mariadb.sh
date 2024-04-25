@@ -4,6 +4,9 @@ echo -e "* Executing MariaDB configuration script *"
 
 export DB_HOST=$(cat /run/secrets/db_host)
 export DB_ROOT_PASS=$(cat /run/secrets/db_root_pass)
+export WP_DB_USER=$(cat /run/secrets/wp_db_user)
+export WP_DB_PASS=$(cat /run/secrets/wp_db_pass)
+
 
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
@@ -14,7 +17,7 @@ if [ -d "/var/lib/mysql/mysql" ]
 then
 	echo "Variables are set. MariaDB is already configured."
 else
-	echo " * Creating MariaDB Directory"
+	echo "* Creating MariaDB Directory"
 	chown -R mysql:mysql /var/lib/mysql
 	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
 	echo "* MySQL Data Directory done."

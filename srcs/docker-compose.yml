@@ -23,6 +23,8 @@ services:
         secrets:
             - db_root_pass
             - db_host
+            - wp_db_user
+            - wp_db_pass
         restart:        on-failure
         volumes:
             - mariadb-data:/var/lib/mysql/
@@ -36,6 +38,8 @@ services:
         secrets:
             - db_root_pass
             - db_host
+            - wp_db_user
+            - wp_db_pass
         restart:        on-failure
         volumes:
             - wordpress-data:/var/www/html/
@@ -86,6 +90,7 @@ services:
         init:        true
         ports:
             - "8084:8084"
+            - "8086:8086"
         env_file:       .env
         networks:
             static_site:
@@ -142,5 +147,8 @@ secrets:
         file: ../secrets/db_root_pass.txt
     db_host:
         file: ../secrets/db_host.txt
-    wp_db_name:
-        file: ../secrets/wp_db_name.txt
+    wp_db_user:
+        file: ../secrets/wp_db_user.txt
+    wp_db_pass:
+        file: ../secrets/wp_db_pass.txt
+    

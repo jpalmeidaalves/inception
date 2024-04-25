@@ -4,6 +4,8 @@ echo "WordPress | Configuring WordPress..."
 
 export DB_HOST=$(cat /run/secrets/db_host)
 export DB_ROOT_PASS=$(cat /run/secrets/db_root_pass)
+export WP_DB_USER=$(cat /run/secrets/wp_db_user)
+export WP_DB_PASS=$(cat /run/secrets/wp_db_pass)
 
 attempt_counter=0
 max_attempts=10
@@ -37,7 +39,8 @@ else
 	wp theme install twentyseventeen --path=${WP_PATH} --activate --allow-root
 	wp theme status twentyseventeen --allow-root
 	wp post delete 1 --force --allow-root
-	wp post create --post_type=post --post_title="Learning Docker" --post_content="In this project we learn Docker and also the basics of Nginx, Mariadb and wordpress!" --post_status=publish --allow-root
+	wp post create --post_type=post --post_title="Learning Docker" --post_content="In this project we learn Docker and also the basics of Nginx, Mariadb and wordpress" --post_status=publish --allow-root
+	wp post create --post_type=post --post_title="Bonus part" --post_content="We must set Redis, Adminer, ftp-server, server a static site and set up an extra service" --post_status=publish --allow-root
 	# Configuring redis cache
 	wp config set WP_REDIS_HOST redis --allow-root
 	wp config set WP_REDIS_PORT 6379 --allow-root

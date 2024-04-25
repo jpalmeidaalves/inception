@@ -4,11 +4,11 @@ DATA_PATH = /home/${LOGIN}/data
 
 ENV =		LOGIN=${LOGIN} DATA_PATH=${DATA_PATH} DOMAIN=${LOGIN}.42.fr 
 
-print_env:
-	@echo "LOGIN=${LOGIN}"
-	@echo "DOMAIN=${DOMAIN}"
-	@echo "DATA_PATH=${DATA_PATH}"
-	@echo "ENV=${ENV}"
+# print_env:
+# 	@echo "LOGIN=${LOGIN}"
+# 	@echo "DOMAIN=${DOMAIN}"
+# 	@echo "DATA_PATH=${DATA_PATH}"
+# 	@echo "ENV=${ENV}"
 
 all: up
 
@@ -41,7 +41,7 @@ setup:
 clean:
 	sudo rm -rf ${DATA_PATH}
 
-fclean: clean
+fclean: down clean
 	${ENV} ./erase_login.sh
 	docker system prune -f -a --volumes
 	docker volume rm srcs_mariadb-data srcs_wordpress-data

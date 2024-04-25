@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dicee</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Who is lucky today?</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server B</title>
-</head>
+      <div class="dice">
+        <p>Player 1</p>
+        <img class="img1" src="./images/dice1.png" />
+      </div>
 
-<body>
-    <h1>Hello from server B</h1>
+      <div class="dice">
+        <p>Player 2</p>
+        <img class="img2" src="./images/dice1.png" />
+      </div>
+      <div>
+        <button class="refbtn">Restart</button>
+        <button class="refbtn">Play</button>
+      </div>
 
-</body>
+    </div>
 
+    <footer>
+      <p> joaoalme 🎲 42 🎲 fr </p>
+      Project developed in the course of Angela Yu's Web Development Bootcamp
+    </footer>
+    <script src="./index.js" charset="UTF-8"></script>
+  </body>
 </html>
