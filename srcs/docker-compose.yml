@@ -40,6 +40,10 @@ services:
             - db_host
             - wp_db_user
             - wp_db_pass
+            - wp_admin_pass
+            - wp_admin_user
+            - wp_user_pass
+            - wp_user
         restart:        on-failure
         volumes:
             - wordpress-data:/var/www/html/
@@ -49,7 +53,7 @@ services:
         container_name: redis
         image:          redis-img-inception
         init: true
-        build:          ./requirements/redis
+        build:          ./requirements/bonus/redis
         volumes:
             - wordpress-data:/var/www/html/
         networks:
@@ -61,7 +65,7 @@ services:
         container_name: ftp-server
         image:          ftp-server-img-inception
         env_file:       .env
-        build:          requirements/ftpserver
+        build:          requirements/bonus/ftpserver
         init: true
         ports:
             - "21:21"
@@ -70,12 +74,15 @@ services:
             - wordpress-data:/var/www/html/
         networks:
             - inception
+        secrets:
+            - ftp_user
+            - ftp_pass
         restart:        on-failure
     adminer:
         container_name: adminer
         image:          adminer-img-inception
         env_file:       .env
-        build:          requirements/adminer
+        build:          requirements/bonus/adminer
         expose:
             - "9000"
         networks:
@@ -86,7 +93,7 @@ services:
     webserv:
         container_name: webserv
         image:          webserv_img-inception
-        build:          requirements/webserv
+        build:          requirements/bonus/webserv
         init:        true
         ports:
             - "8084:8084"
@@ -101,7 +108,7 @@ services:
     cadvisor:
         container_name: cadvisor
         image: cadvisor_img-inception
-        build: requirements/cadvisor
+        build: requirements/bonus/cadvisor
         networks:
             - inception
         ports:
@@ -151,4 +158,16 @@ secrets:
         file: ../secrets/wp_db_user.txt
     wp_db_pass:
         file: ../secrets/wp_db_pass.txt
+    wp_admin_pass:
+        file: ../secrets/wp_admin_pass.txt
+    wp_admin_user:
+        file: ../secrets/wp_admin_user.txt
+    wp_user_pass:
+        file: ../secrets/wp_user_pass.txt
+    wp_user:
+        file: ../secrets/wp_user.txt
+    ftp_user:
+        file: ../secrets/ftp_user.txt
+    ftp_pass:
+        file: ../secrets/ftp_pass.txt
     

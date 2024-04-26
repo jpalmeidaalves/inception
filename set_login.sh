@@ -6,3 +6,7 @@ fi
 
 sed -i "s/login/${LOGIN}/g" srcs/.env
 sed -i "s/login/${LOGIN}/g" srcs/requirements/nginx/conf/default.conf
+sed -i "s/login/${LOGIN}/g" secrets/ftp_user.txt
+sed -i "s/login/${LOGIN}/g" secrets/wp_admin_user.txt
+sed -i "s/login/${LOGIN}/g" secrets/wp_user.txt
+sed -i "s/login/${LOGIN}/g" secrets/wp_db_user.txt

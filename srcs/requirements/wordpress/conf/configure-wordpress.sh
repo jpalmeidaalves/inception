@@ -6,6 +6,10 @@ export DB_HOST=$(cat /run/secrets/db_host)
 export DB_ROOT_PASS=$(cat /run/secrets/db_root_pass)
 export WP_DB_USER=$(cat /run/secrets/wp_db_user)
 export WP_DB_PASS=$(cat /run/secrets/wp_db_pass)
+export WP_USER=$(cat /run/secrets/wp_user)
+export WP_USER_PASS=$(cat /run/secrets/wp_user_pass)
+export WP_ADMIN_PASS=$(cat /run/secrets/wp_admin_pass)
+export WP_ADMIN_USER=$(cat /run/secrets/wp_admin_user)
 
 attempt_counter=0
 max_attempts=10

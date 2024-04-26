@@ -1,5 +1,7 @@
 #!/bin/sh
-# trap "exit" TERM
+export FTP_USER=$(cat /run/secrets/ftp_user)
+export FTP_PASS=$(cat /run/secrets/ftp_pass)
+
 if [ ! -f "/etc/vsftpd/vsftpd.conf.bak" ]; then
 
     mkdir -p /var/www/html
